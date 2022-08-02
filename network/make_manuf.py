@@ -14,18 +14,15 @@ with open(os.path.join(base, 'manuf')) as fp:
     lines = [l for l in lines if l != "" and l[0] != '#']    
 
 def get_mac_and_mask(mac):
-    # simple case 
-    if not "/" in mac:
+    # simple case
+    if "/" not in mac:
         mac_hex = mac.replace(":", '')
         mask    = 48 - 4 * len(mac_hex)
-        mac_int = int(mac_hex, 16) << mask
-
-    # 00:1B:C5:00:00:00/36
     else:
         parts = mac.split("/")
         mac_hex = parts[0].replace(":", '')
         mask    = 48 - int(parts[1])
-        mac_int = int(mac_hex, 16) << mask 
+    mac_int = int(mac_hex, 16) << mask
 
     return (mac_int, mask)
 
